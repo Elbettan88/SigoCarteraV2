@@ -1,0 +1,126 @@
+<form class="v2-financial-form">
+  <div class="row-inputs-v2">
+    <div class="input-field-v2">
+      <label>Banco Receptor (Guatemala 2026)</label>
+      <select [(ngModel)]="abono.banco" name="banco">
+        <option value="BI">🏦 Banco Industrial, S.A. (BI)</option>
+        <option value="BANRURAL">🏦 Banrural (Banco de Desarrollo Rural, S.A.)</option>
+        <option value="BAC">🏦 BAC Credomatic Guatemala</option>
+        <option value="GYT">🏦 Banco G&T Continental, S.A.</option>
+        <option value="BAM">🏦 Banco Agromercantil (BAM)</option>
+        <option value="PROMERICA">🏦 Banco Promerica Guatemala</option>
+        <option value="BANTRAB">🏦 Bantrab</option>
+        <option value="INTER">🏦 Interbanco</option>
+      </select>
+    </div>
+    <div class="input-field-v2">
+      <label>Numero de Documento / Boleta</label>
+      <input
+        type="text"
+        placeholder="Ej: TRF-88451"
+        [(ngModel)]="abono.noDocumento"
+        name="noDocumento"
+      />
+    </div>
+  </div>
+
+  <div class="row-inputs-v2">
+    <div class="input-field-v2">
+      <label>Fecha de Pago</label>
+      <input type="date" [(ngModel)]="abono.fechaPago" name="fechaPago" />
+    </div>
+    <div class="input-field-v2">
+      <label>Fecha de Aplicacion del Pago</label>
+      <input type="date" [(ngModel)]="abono.fechaAplicacion" name="fechaAplicacion" />
+    </div>
+  </div>
+
+  <div class="row-inputs-v2">
+    <div class="input-field-v2">
+      <label>Codigo Cliente (Padre/Hijo)</label>
+      <input
+        type="text"
+        placeholder="Ej: 814526-7 o MARC-001"
+        [(ngModel)]="abono.codigoCliente"
+        name="codigoCliente"
+      />
+    </div>
+    <div class="input-field-v2">
+      <label>A que Factura Aplica</label>
+      <input
+        type="text"
+        placeholder="Ej: FAC-4501"
+        [(ngModel)]="abono.noFactura"
+        name="noFactura"
+      />
+    </div>
+  </div>
+
+  <div class="row-inputs-v2">
+    <div class="input-field-v2">
+      <label>Moneda del Pago</label>
+      <select [(ngModel)]="abono.moneda" name="moneda">
+        <option value="GTQ">🇬🇹 Quetzales (GTQ)</option>
+        <option value="USD">🇺🇸 Dólares (USD)</option>
+      </select>
+    </div>
+    <div class="input-field-v2">
+      <label>Tipo de Aplicacion (Parcial o Total)</label>
+      <select [(ngModel)]="abono.tipoAplicacion" name="tipoAplicacion">
+        <option value="parcial">⏳ Abono Parcial</option>
+        <option value="total">💵 Cancelacion Total</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row-inputs-v2">
+    <div class="input-field-v2">
+      <label>Tipo de Pago / Canal</label>
+      <select [(ngModel)]="abono.tipoPago" name="tipoPago">
+        <option value="transferencia">📲 Transferencia Bancaria</option>
+        <option value="cheque">🏦 Cheque Voucher</option>
+        <option value="deposito">🏢 Deposito Monetario</option>
+        <option value="extranjero_trf">✈️ Transferencia del Extranjero (Wire/Swift)</option>
+        <option value="extranjero_chq">✈️ Cheque del Extranjero (USD Compensation)</option>
+      </select>
+    </div>
+    <div class="input-field-v2">
+      <label>Monto a Abonar</label>
+      <input type="number" placeholder="0.00" [(ngModel)]="abono.monto" name="monto" />
+    </div>
+  </div>
+
+  <!-- 🟢 CAMPO DINÁMICO MANUAL: Aparece solo si se selecciona un método extranjero -->
+  @if (abono.tipoPago.includes('extranjero')) {
+    <div class="input-field-v2 usd-exchange-glow animate-fade-in">
+      <label class="text-cyan-neon">⚡ Especificar Banco Emisor Internacional / Plataforma</label>
+      <input
+        type="text"
+        placeholder="Ej: Wells Fargo, Bank of America, Citibank NY"
+        [(ngModel)]="abono.origenExtranjero"
+        name="origenExtranjero"
+      />
+    </div>
+  }
+
+  <!-- 🟢 CAJA DE COMENTARIOS / OBSERVACIONES ANCHA -->
+  <div class="input-field-v2">
+    <label>Comentarios y Observaciones de Auditoria</label>
+    <textarea
+      rows="3"
+      class="v2-textarea-sap"
+      placeholder="Escribe detalles criticos (ej. Referencia de liquidacion, multas, retenciones de IVA, etc.)..."
+      [(ngModel)]="abono.observaciones"
+      name="observaciones"
+    ></textarea>
+  </div>
+
+  <div class="v2-form-actions-footer">
+    <button type="button" class="btn-form-v2 btn-cancel" (click)="notificarCancelacion()">
+      Cancelar
+    </button>
+    <button type="button" class="btn-form-v2 btn-save" (click)="dispararGuardadoAbono()">
+      Aplicar Pago
+    </button>
+  </div>
+</form>

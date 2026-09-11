@@ -1,0 +1,45 @@
+.v2-historico-header-grid {
+  display: grid;
+  grid-template-columns: 14% 15% 35% 14% 12% 10%;
+  background-color: var(--bg-app) !important;
+  border-bottom: 1px solid var(--border-line);
+  padding: 14px 16px;
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.v2-historico-row-grid {
+  display: grid;
+  grid-template-columns: 14% 15% 35% 14% 12% 10%;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-line) !important;
+  font-size: 13px;
+  color: var(--text-main);
+  background-color: var(--bg-card);
+}
+
+.badge-status-flat {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: monospace;
+  display: inline-block;
+
+  &.st-corriente {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+  &.st-vencido {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+  }
+  &.st-critico {
+    background-color: rgba(244, 63, 94, 0.1);
+    color: #f43f5e;
+  }
+}

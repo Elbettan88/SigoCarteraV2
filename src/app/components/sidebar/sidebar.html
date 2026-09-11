@@ -77,6 +77,19 @@
           }
         </a>
 
+        <!-- 🟢 Opción Nueva: Registro Histórico Autónomo de Auditoría -->
+        <a
+          routerLink="/historico"
+          routerLinkActive="active-route"
+          class="menu-link"
+          [class.justify-content-center]="menuColapsado()"
+        >
+          <span class="link-icon">📜</span>
+          @if (!menuColapsado()) {
+            <span class="animate-fade-in">Histórico Facturas</span>
+          }
+        </a>
+
         <!-- Opción 4: Gestión del Personal -->
         <a
           routerLink="/usuarios"
@@ -94,7 +107,7 @@
 
     <!-- Cierre de Sesión Seguro + Selector de Tema Atómico Integrado -->
     <div class="sidebar-bottom">
-      <!-- ☀️ Switch On/Off de Modo Claro / Modo Oscuro Independiente -->
+      <!-- ☀️ Switch On/Off de Modo Claro / Modo Oscuro Independent -->
       <app-theme-toggle [mostrarTexto]="!menuColapsado()"></app-theme-toggle>
 
       <button

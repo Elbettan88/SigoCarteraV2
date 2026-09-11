@@ -1,0 +1,49 @@
+/* ==========================================================================
+   🧮 RENDERIZADO AISLADO DEL SWITCH PUSH CIRCULAR V2
+   ========================================================================== */
+.v2-push-toggle-container {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  padding: 8px 0 !important;
+  width: 100% !important;
+}
+
+.v2-push-circle-track {
+  width: 46px !important;
+  height: 22px !important;
+  background-color: #10b981 !important; // Verde PADRE
+  border-radius: 30px !important;
+  position: relative !important;
+  display: inline-block !important;
+  transition: background-color 0.2s ease-in-out !important;
+  border: 1px solid var(--border-input) !important;
+
+  &.push-track-hijo {
+    background-color: #3b82f6 !important; // Azul HIJO
+  }
+}
+
+.v2-push-circle-handle {
+  width: 16px !important;
+  height: 16px !important;
+  background-color: #ffffff !important;
+  border-radius: 50% !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 3px !important;
+  transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.v2-push-circle-track.push-track-hijo .v2-push-circle-handle {
+  left: 25px !important;
+}
+
+.v2-push-toggle-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main) !important;
+}

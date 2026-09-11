@@ -1,0 +1,162 @@
+<form class="v2-financial-form">
+  <!-- 🔍 BLOQUE DE BÚSQUEDA / CONTROL -->
+  <div class="input-field-v2">
+    <label>NIT o Codigo de la Entidad a Buscar</label>
+    <div class="d-flex gap-2">
+      <input
+        type="text"
+        placeholder="Ej: 814526-7 o MARC-001"
+        [(ngModel)]="busquedaCodigo"
+        name="busqueda"
+      />
+      <button
+        type="button"
+        class="btn-form-v2 btn-save"
+        style="width: auto; white-space: nowrap"
+        (click)="buscarEntidadEnPool()"
+      >
+        🔍 Buscar
+      </button>
+    </div>
+  </div>
+
+  @if (entidadEncontrada) {
+    <!-- 🧬 SECCIÓN A: MAESTRO CORE DE IDENTIFICACIÓN (EDITABLE) -->
+    <div class="v2-form-section-divider">📑 DATOS MAESTROS CORE</div>
+
+    <div class="input-field-v2">
+      <label>Estructura de Entidad (Base de Datos)</label>
+      <div class="v2-push-toggle-container" (click)="alternarTipoEntidad()">
+        <div
+          class="v2-push-circle-track"
+          [class.push-track-hijo]="entidadModificada.tipoEntidad === 'hijo'"
+        >
+          <div class="v2-push-circle-handle"></div>
+        </div>
+        <span class="v2-push-toggle-label">
+          Nivel:
+          <strong
+            [style.color]="entidadModificada.tipoEntidad === 'padre' ? '#10b981' : '#3b82f6'"
+            >{{ entidadModificada.tipoEntidad.toUpperCase() }}</strong
+          >
+        </span>
+      </div>
+    </div>
+
+    <div class="row-inputs-v2">
+      <div class="input-field-v2">
+        <label>NIT o Codigo Relacional</label>
+        <input type="text" [(ngModel)]="entidadModificada.codigo" name="codigo" />
+      </div>
+      <div class="input-field-v2">
+        <label>Nombre / Razon Social Comercial</label>
+        <input type="text" [(ngModel)]="entidadModificada.nombre" name="nombre" />
+      </div>
+    </div>
+
+    <!-- 📞 SECCIÓN B: EXPANSIÓN CRM / LOCALIZACIÓN -->
+    <div class="v2-form-section-divider">📞 DATOS DE CONTACTO Y CRM</div>
+
+    <div class="row-inputs-v2">
+      <div class="input-field-v2">
+        <label>Telefono de Contacto</label>
+        <input
+          type="text"
+          placeholder="Ej: +502 2200-0000"
+          [(ngModel)]="entidadModificada.telefono"
+          name="telefono"
+        />
+      </div>
+      <div class="input-field-v2">
+        <label>Nombre de Contacto / Gestor</label>
+        <input
+          type="text"
+          placeholder="Ej: Ing. Carlos Pérez"
+          [(ngModel)]="entidadModificada.contacto"
+          name="contacto"
+        />
+      </div>
+    </div>
+
+    <div class="input-field-v2">
+      <label>Direccion Fisica / Fiscal Gubernamental</label>
+      <input
+        type="text"
+        placeholder="Ej: Avenida La Reforma, Zona 10, Ciudad de Guatemala"
+        [(ngModel)]="entidadModificada.direccion"
+        name="direccion"
+      />
+    </div>
+
+    <!-- ✉️ SECCIÓN C: MATRIZ DE CORREOS DINÁMICOS (MÁXIMO 3) -->
+    <div class="v2-form-section-divider">✉️ CORREOS DE EMISIÓN DE FACTURAS (MÁXIMO 3)</div>
+
+    <div class="v2-emails-dynamic-container">
+      @for (correo of entidadModificada.correos; track $index) {
+        <div class="d-flex gap-2 mb-2 align-items-center">
+          <div class="input-field-v2 m-0 flex-grow-1">
+            <input
+              type="email"
+              placeholder="Ej: facturacion{{ $index + 1 }}@empresa.com"
+              [(ngModel)]="entidadModificada.correos[$index]"
+              name="correo_{{ $index }}"
+            />
+          </div>
+          @if (entidadModificada.correos.length > 1) {
+            <button type="button" class="btn-remove-email-v2" (click)="removerCorreo($index)">
+              ✕
+            </button>
+          }
+        </div>
+      }
+
+      @if (entidadModificada.correos.length < 3) {
+        <button type="button" class="btn-add-email-v2" (click)="agregarCorreo()">
+          ➕ Agregar Correo Alterno ({{ entidadModificada.correos.length }}/3)
+        </button>
+      }
+    </div>
+
+    <!-- 🏢 SECCIÓN D: TÉRMINOS FINANCIEROS Y CONTRACTUALES -->
+    <div class="v2-form-section-divider">💼 CONDICIONES CONTRACTUALES</div>
+
+    <div class="row-inputs-v2">
+      <div class="input-field-v2">
+        <label>Condicion de Pago</label>
+        <select [(ngModel)]="entidadModificada.condicionPago" name="condicionPago">
+          <option value="credito">⏳ Crédito Comercial</option>
+          <option value="contado">💵 Pago de Contado</option>
+        </select>
+      </div>
+      <div class="input-field-v2">
+        <label>Dias de Credito Asignados</label>
+        <input type="number" [(ngModel)]="entidadModificada.diasCredito" name="diasCredito" />
+      </div>
+    </div>
+
+    <div class="input-field-v2">
+      <label>Observaciones e Historial de Cambios</label>
+      <textarea
+        rows="3"
+        class="v2-textarea-sap"
+        placeholder="Detalle los motivos de los cambios aplicados en la ficha..."
+        [(ngModel)]="entidadModificada.observaciones"
+        name="observaciones"
+      ></textarea>
+    </div>
+  }
+
+  <div class="v2-form-actions-footer">
+    <button type="button" class="btn-form-v2 btn-cancel" (click)="notificarCancelacion()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn-form-v2 btn-save"
+      [disabled]="!entidadEncontrada"
+      (click)="dispararGuardadoModificacion()"
+    >
+      Guardar Cambios
+    </button>
+  </div>
+</form>

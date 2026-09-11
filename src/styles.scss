@@ -9,22 +9,27 @@
   --text-secondary: #9ca3af;
   --bg-input: #0d0f12;
   --border-input: #222933;
+  --cyan-neon-sap: #00f2fe;
 }
 
-/* 🟢 MODO CLARO EJECUTIVO: Paleta Gris Carbono Satinado de Alto Contraste (Cero Brillo Chillante) */
+/* 🟢 MODO CLARO EJECUTIVO: Paleta Gris Carbono Satinado estilo SAP Quartz (Cero Brillo Chillante) */
 body.light-theme {
-  --bg-app: #cbd5e1 !important; /* 💎 Gris acero de fondo profundo (Mucho más oscuro que antes) */
-  --bg-card: #e2e8f0 !important; /* 💎 Gris satinado intermedio para el cuerpo de las tarjetas */
+  --bg-app: #cbd5e1 !important; /* Gris acero de fondo profundo */
+  --bg-card: #e2e8f0 !important; /* Gris satinado intermedio para tarjetas */
   --border-line: #94a3b8 !important; /* Bordes sólidos de oficina en gris plomo */
-  --text-main: #0f172a !important; /* Grafito oscuro profundo para máxima nitidez */
+  --text-main: #0f172a !important; /* Negro grafito profundo para máxima nitidez */
   --text-secondary: #334155 !important; /* Gris carbón secundario para subtítulos y metas */
   --bg-input: #f1f5f9 !important;
   --border-input: #475569 !important;
+  --cyan-neon-sap: #0f172a !important;
 }
 
-/* ==========================================================================
-   ESTRUCTURAS RAÍZ ADAPTABLES (REMOVIDOS LOS COLORES FIJOS HEXADECIMALES)
-   ========================================================================== */
+.cyan-neon-text,
+.text-cyan-neon,
+.v2-main-title span {
+  color: var(--cyan-neon-sap) !important;
+}
+
 html,
 body {
   margin: 0;
@@ -46,7 +51,6 @@ app-root {
   height: 100%;
 }
 
-/* 📱 SOPORTE DE CLASES AUXILIARES DE DISTRIBUCIÓN FLUIDA V2 */
 .d-flex {
   display: flex !important;
 }
@@ -73,7 +77,6 @@ app-root {
   padding: 20px;
   box-sizing: border-box;
 }
-
 .login-card {
   width: 100%;
   max-width: 420px;
@@ -86,7 +89,6 @@ app-root {
   overflow: hidden;
   box-sizing: border-box;
 }
-
 .cyber-glow {
   position: absolute;
   top: -150px;
@@ -99,13 +101,11 @@ app-root {
   filter: blur(60px);
   pointer-events: none;
 }
-
 .login-header {
   text-align: center;
   margin-bottom: 30px;
   position: relative;
   z-index: 1;
-
   .logo-circle {
     display: inline-flex;
     align-items: center;
@@ -118,7 +118,6 @@ app-root {
     font-size: 24px;
     color: #00f2fe;
   }
-
   h2 {
     color: var(--text-main);
     font-weight: 900;
@@ -136,101 +135,8 @@ app-root {
   }
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  position: relative;
-  z-index: 1;
-}
-
-.input-group-v2 {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 15px;
-
-  label {
-    font-family: monospace;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-
-  input {
-    width: 100%;
-    height: 44px;
-    background-color: var(--bg-input);
-    border: 1px solid var(--border-input);
-    border-radius: 8px;
-    color: var(--text-main);
-    padding: 0 15px;
-    font-size: 14px;
-    transition: all 0.2s ease-in-out;
-    box-sizing: border-box;
-    outline: none;
-
-    &:focus {
-      border-color: #00f2fe;
-      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-    }
-  }
-}
-
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 15px;
-
-  .checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    input {
-      accent-color: #00f2fe;
-    }
-  }
-  .forgot-link {
-    color: rgba(0, 242, 254, 0.7);
-    cursor: pointer;
-    transition: color 0.2s;
-    &:hover {
-      color: #00f2fe;
-    }
-  }
-}
-
-.btn-submit-v2 {
-  width: 100%;
-  height: 44px;
-  background-color: #00f2fe;
-  color: #0d0f12;
-  font-weight: 700;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover:not(:disabled) {
-    background-color: #00d8e4;
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-  }
-  &:disabled {
-    background-color: var(--border-line);
-    color: var(--text-secondary);
-    cursor: not-allowed;
-  }
-}
-
 /* ==========================================================================
-   📊 SECCIÓN DE RENDIMIENTO EJECUTIVO (DASHBOARD CONSOLIDADO GENERAL V2)
+   📊 CONTENEDOR MAESTRO DE LA PLATAFORMA
    ========================================================================== */
 .v2-dashboard-wrapper {
   width: 100%;
@@ -240,12 +146,10 @@ app-root {
   height: auto !important;
   min-height: 100vh;
 }
-
 .v2-header-clean {
   margin-bottom: 30px;
   border-bottom: 1px solid var(--border-line);
   padding-bottom: 20px;
-
   .v2-header-title {
     display: flex;
     align-items: center;
@@ -262,23 +166,11 @@ app-root {
     margin: 0;
     letter-spacing: -0.5px;
   }
-  .cyan-neon-text {
-    color: #00f2fe !important;
-    text-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-  }
   .v2-header-subtitle {
     color: var(--text-secondary);
     font-size: 13px;
     margin: 6px 0 0 0;
   }
-}
-
-.sidebar-v2 {
-  background-color: var(--bg-card) !important;
-  border-right: 1px solid var(--border-line) !important;
-  transition:
-    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.2s ease;
 }
 
 .v2-kpi-row-horizontal {
@@ -289,7 +181,6 @@ app-root {
   margin-bottom: 30px;
   width: 100%;
 }
-
 .v2-kpi-card-box {
   flex: 1;
   min-width: 240px;
@@ -302,11 +193,9 @@ app-root {
   transition:
     transform 0.2s,
     background-color 0.2s ease;
-
   &:hover {
     transform: translateY(-2px);
   }
-
   .v2-card-meta {
     font-family: monospace;
     font-size: 10px;
@@ -349,7 +238,6 @@ app-root {
   padding: 24px;
   box-sizing: border-box;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-
   .v2-graph-header {
     display: flex;
     align-items: center;
@@ -357,10 +245,6 @@ app-root {
     margin-bottom: 24px;
     border-bottom: 1px solid var(--border-line);
     padding-bottom: 14px;
-
-    .graph-icon {
-      font-size: 20px;
-    }
     h4 {
       color: var(--text-main) !important;
       font-size: 16px;
@@ -374,7 +258,6 @@ app-root {
     }
   }
 }
-
 .v2-bars-container-horizontal {
   background-color: var(--bg-app) !important;
   padding: 24px;
@@ -384,12 +267,10 @@ app-root {
   flex-direction: column;
   gap: 24px;
 }
-
 .v2-bar-item-row {
   display: flex;
   flex-direction: column;
   gap: 6px;
-
   .v2-bar-labels {
     display: flex;
     justify-content: space-between;
@@ -397,7 +278,6 @@ app-root {
     font-family: monospace;
     color: var(--text-main) !important;
   }
-
   .v2-bar-track-bg {
     width: 100%;
     height: 14px;
@@ -406,21 +286,18 @@ app-root {
     border-radius: 20px;
     overflow: hidden;
   }
-
   .v2-bar-fill-gradient {
     height: 100%;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
     transition: width 0.5s ease-in-out;
   }
-
   .bg-gtq-gradient {
     background: linear-gradient(90deg, #10b981, #00f2fe);
   }
   .bg-usd-gradient {
     background: linear-gradient(90deg, #3b82f6, #00f2fe);
   }
-
   .v2-bar-footers {
     display: flex;
     justify-content: space-between;
@@ -429,9 +306,24 @@ app-root {
     font-family: monospace;
   }
 }
+.v2-executive-footer {
+  text-align: center;
+  margin-top: 24px;
+  .v2-executive-badge {
+    background-color: rgba(0, 242, 254, 0.08);
+    color: #00f2fe;
+    border: 1px solid rgba(0, 242, 254, 0.15);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+  }
+}
 
 /* ==========================================================================
-   🔧 MÓDULO DE MICRO-TARJETAS DE ACCIÓN COMPACTAS HORIZONTALES (V2)
+   🔧 ARQUITECTURA DE CONTENEDORES DE MICRO-TARJETAS (ESTRUCTURA BASE)
    ========================================================================== */
 .v2-search-box-compact {
   background-color: var(--bg-card) !important;
@@ -443,7 +335,6 @@ app-root {
   gap: 10px;
   max-width: 360px;
   margin-bottom: 20px;
-
   .search-lens {
     color: var(--text-secondary);
     font-size: 13px;
@@ -457,18 +348,18 @@ app-root {
     font-size: 13px;
   }
 }
+
 .v2-action-cards-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 12px;
 }
+
 .v2-action-card {
   flex: 1;
-  min-width: 130px;
-  height: 44px;
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-line) !important;
+  min-width: 140px;
+  height: 48px;
   border-radius: 8px !important;
   padding: 4px 14px !important;
   box-sizing: border-box;
@@ -480,26 +371,38 @@ app-root {
   outline: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  &:hover:not(:disabled) {
+
+  &:hover {
     transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
   }
 }
+
 .action-text-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   .action-title {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
-    color: var(--text-main);
+    line-height: 14px;
   }
   .action-desc {
     font-size: 9px;
     color: var(--text-secondary);
     font-weight: 600;
+    margin-top: 1px;
   }
 }
+
+.action-icon {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .border-outline-glow {
   border-left: 3px solid var(--text-secondary) !important;
 }
@@ -514,45 +417,280 @@ app-root {
 }
 .border-refresh-glow {
   border-left: 3px solid #00f2fe !important;
-} /* ==========================================================================🧮 MOTOR DE REJILLA JERÁRQUICA MULTIMONEDA V2 (CSS GRID)========================================================================== */
-.v2-matrix-container {
+}
+/* ==========================================================================
+   🪐 FILA DE CONTROL SUPERIOR HORIZONTAL UNIFICADA V2
+   ========================================================================== */
+.v2-top-control-bar-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   width: 100%;
+  margin-bottom: 24px; // Espacio uniforme antes de las tarjetas de KPIs
+  box-sizing: border-box;
+}
+
+/* Caja de búsqueda incrustada en la fila principal */
+.v2-search-box-compact-embedded {
   background-color: var(--bg-card) !important;
   border: 1px solid var(--border-line) !important;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-}
-.v2-matrix-header-grid {
-  display: grid;
-  grid-template-columns: 31% 15% 13.5% 13.5% 13.5% 13.5%;
-  background-color: var(--bg-app) !important;
-  border-bottom: 1px solid var(--border-line);
-  padding: 14px 16px;
+  padding: 0 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 280px;
+  max-width: 340px;
+  height: 44px; // Amarrada a la altura exacta de las micro-cards
   box-sizing: border-box;
-  .cell-head {
-    font-family: monospace;
-    font-size: 10px;
-    font-weight: 700;
+  flex-shrink: 0;
+
+  .search-lens {
     color: var(--text-secondary);
-    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-main);
+    font-size: 13px;
+    &::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
   }
 }
-.v2-row-grid {
-  display: grid;
-  grid-template-columns: 31% 15% 13.5% 13.5% 13.5% 13.5%;
-  align-items: center;
-  padding: 12px 16px;
-  color: var(--text-main) !important;
+
+/* Envoltura para los botones del componente action-bar */
+.v2-actions-wrapper-embedded {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+/* 🟢 MAQUETACIÓN DE ANCHO COMPLETO PARA LA MATRIZ FIJA */
+.v2-matrix-fija-wrapper-layout {
+  width: 100%;
+  margin-top: 10px;
+  display: block;
+  box-sizing: border-box;
+}
+/* ==========================================================================
+   🪐 CORTINA LATERAL FLOTANTE INDESTRUCTIBLE (GLOBAL DRAWER V2)
+   ========================================================================== */
+.v2-drawer-overlay {
+  position: fixed !important; /* 🟢 Forzado absoluto sobre todo el ERP */
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.6) !important; /* Fondo oscuro difuminado */
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999999 !important; /* Por encima de cualquier KPI, Sidebar o Gráfica */
+  transition: opacity 0.25s ease-in-out !important;
+
+  &.drawer-abierto {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
+.v2-drawer-content {
+  position: fixed !important;
+  top: 0 !important;
+  right: -480px !important; /* Escondido a la derecha de fábrica */
+  width: 440px !important;
+  height: 100vh !important;
+  background-color: #141820 !important; /* Antracita fijo en Modo Oscuro */
+  border-left: 1px solid var(--border-line) !important;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5) !important;
+  transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  z-index: 1000000 !important;
+
+  &.drawer-abierto {
+    right: 0 !important; /* 🟢 Desliza impecable al frente */
+  }
+}
+
+/* Adaptación automática a Gris Mate SAP al activar el Modo Claro */
+body.light-theme .v2-drawer-content {
+  background-color: #e2e8f0 !important;
+  border-left: 1px solid #94a3b8 !important;
+}
+
+/* Diseños y paddings internos fijos del formulario */
+.v2-drawer-header {
+  padding: 24px 20px !important;
   border-bottom: 1px solid var(--border-line) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: transparent !important;
+
+  h4 {
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    color: var(--text-main) !important;
+    letter-spacing: 0.5px;
+  }
+  .btn-cerrar-drawer {
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-secondary) !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    outline: none !important;
+    &:hover {
+      color: #f43f5e !important;
+    }
+  }
 }
-.row-padre-cliente {
-  background-color: rgba(100, 116, 139, 0.03) !important;
+
+.v2-drawer-body {
+  padding: 24px 20px !important;
+  flex-grow: 1 !important;
+  overflow-y: auto !important;
+  background-color: transparent !important;
 }
-.row-hijo-marca {
-  background-color: rgba(100, 116, 139, 0.01) !important;
+
+.v2-financial-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px !important;
 }
-.row-factura-activa {
-  background-color: rgba(0, 242, 254, 0.03) !important;
-  border-left: 3px solid #00f2fe !important;
+
+.row-inputs-v2 {
+  display: flex !important;
+  gap: 12px !important;
+  width: 100% !important;
+  .input-field-v2 {
+    flex: 1 !important;
+  }
+}
+
+.input-field-v2 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  width: 100% !important;
+
+  label {
+    font-family: monospace !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: var(--text-secondary) !important;
+    text-transform: uppercase;
+  }
+  input,
+  select {
+    width: 100% !important;
+    height: 40px !important;
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border-input) !important;
+    border-radius: 6px !important;
+    color: var(--text-main) !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    &:focus {
+      border-color: #00f2fe !important;
+    }
+  }
+}
+
+.v2-form-actions-footer {
+  margin-top: 24px !important;
+  display: flex !important;
+  gap: 12px !important;
+  justify-content: flex-end !important;
+  .btn-form-v2 {
+    height: 40px !important;
+    padding: 0 20px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    border: none !important;
+    &.btn-cancel {
+      background: transparent !important;
+      color: var(--text-secondary) !important;
+      border: 1px solid var(--border-line) !important;
+    }
+    &.btn-save {
+      background: #00f2fe !important;
+      color: #0d0f12 !important;
+      font-weight: 800 !important;
+      &:hover {
+        background: #00d8e4 !important;
+      }
+    }
+  }
+}
+
+body.light-theme .v2-form-actions-footer .btn-save {
+  background: #0f172a !important; /* Botón guardar negro ejecutivo en Modo Claro SAP */
+  color: #ffffff !important;
+}
+/* 🟢 CAJA DE COMENTARIOS ADAPTABLE ESTILO SAP QUARTZ */
+.v2-textarea-sap {
+  width: 100% !important;
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-input) !important;
+  border-radius: 6px !important;
+  color: var(--text-main) !important;
+  padding: 10px 12px !important;
+  font-size: 13px !important;
+  font-family: 'Segoe UI', Roboto, sans-serif !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  resize: none !important;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #00f2fe !important;
+  }
+}
+/* 🟢 FILA GEMELA FLEXIBLE DE ACCESO GLASSMORMISM V2 */
+.v2-login-flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 24px; // Separación elegante entre las dos consolas de cristal
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+
+  @media (max-width: 850px) {
+    flex-direction: column; // Se vuelve vertical de forma segura en pantallas de teléfonos
+    gap: 16px;
+  }
+}
+
+.v2-toast-embedded-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: toastFadeIn 0.3s ease forwards;
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

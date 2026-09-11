@@ -1,64 +1,64 @@
 <div class="login-wrapper">
-  <div class="login-card">
-    <!-- Destello de fondo cyberpunk -->
-    <div class="cyber-glow"></div>
-
-    <!-- Encabezado e Identidad -->
-    <div class="login-header">
-      <div class="logo-circle">
-        <span>⚡</span>
+  <!-- 🟢 CONTENEDOR FLEXIBLE CENTRAL HORIZONTAL -->
+  <div class="v2-login-flex-row">
+    <!-- Tarjeta con Efecto Cristal 3D -->
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-circle">⚡</div>
+        <h2>SigoCartera <span class="cyan-text">V2</span></h2>
+        <p class="subtitle">Gestión y Auditoría de Saldos Multimoneda</p>
       </div>
-      <h2>SIGOCARTERA <span class="cyan-text">V2</span></h2>
-      <p class="subtitle">Gestión y Auditoría de Saldos Multimoneda</p>
+
+      <form class="login-form" (ngSubmit)="ejecutarAutenticacionV2()">
+        <!-- Input 1: Correo -->
+        <div class="input-group-v2">
+          <label>📧 Correo Institucional</label>
+          <input
+            type="email"
+            placeholder="ejemplo@sigo.com"
+            [(ngModel)]="credenciales.correo"
+            name="correo"
+            required
+          />
+        </div>
+
+        <!-- Input 2: Contraseña -->
+        <div class="input-group-v2">
+          <label>🔑 Contraseña de Acceso</label>
+          <input
+            type="password"
+            placeholder="••••••••••••"
+            [(ngModel)]="credenciales.password"
+            name="password"
+            required
+          />
+        </div>
+
+        <div class="form-actions">
+          <label class="checkbox-container">
+            <input type="checkbox" [(ngModel)]="recordarSesion" name="remember" />
+            <span>Recordar sesión</span>
+          </label>
+          <a href="javascript:void(0)" class="forgot-link">¿Olvidó su contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-submit-v2">Autenticar Sistema</button>
+      </form>
+
+      <div class="test-roles-box-v2">
+        <div class="title-test">ROLES COMPATIBLES PARA PRUEBAS:</div>
+        <div>• <strong>Admin:</strong> <code>admin@sigo.com</code> | <code>Sigo2026!</code></div>
+        <div class="mt-1">
+          • <strong>Gestor:</strong> <code>gestor@sigo.com</code> | <code>Cobros2026!</code>
+        </div>
+      </div>
     </div>
 
-    @if (errorMensaje()) {
-      <div class="error-box">⚠️ {{ errorMensaje() }}</div>
+    <!-- 🟢 EL TOAST SE COLOCA A LA DERECHA EN PARALELO EXACTO -->
+    @if (mostrarMensajeExito()) {
+      <div class="v2-toast-embedded-holder">
+        <app-login-toast></app-login-toast>
+      </div>
     }
-
-    <!-- Formulario Seguro -->
-    <form (submit)="ejecutarLoginV2($event)" class="login-form">
-      <div class="input-group-v2">
-        <label>📧 Correo Institucional</label>
-        <input
-          type="email"
-          name="email"
-          [(ngModel)]="correo"
-          placeholder="ejemplo@sigo.com"
-          required
-        />
-      </div>
-
-      <div class="input-group-v2">
-        <label>🔑 Contraseña de Acceso</label>
-        <input
-          type="password"
-          name="password"
-          [(ngModel)]="clave"
-          placeholder="••••••••••••"
-          required
-        />
-      </div>
-
-      <div class="form-actions">
-        <label class="checkbox-container"> <input type="checkbox" /> Recordar sesión </label>
-        <span class="forgot-link">¿Olvidó su contraseña?</span>
-      </div>
-
-      <button type="submit" [disabled]="cargando()" class="btn-submit-v2">
-        @if (cargando()) {
-          <span class="spinner-v2"></span>
-        } @else {
-          Autenticar Sistema
-        }
-      </button>
-
-      <!-- Tip de Credenciales de Auditoría -->
-      <div class="credentials-tip">
-        <span class="tip-title">ROLES COMPATIBLES PARA PRUEBAS:</span><br />
-        Admin: admin@sigo.com | Sigo2026!<br />
-        Gestor: gestor@sigo.com | Cobros2026!
-      </div>
-    </form>
   </div>
 </div>

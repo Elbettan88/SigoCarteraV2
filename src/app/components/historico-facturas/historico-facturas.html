@@ -1,0 +1,52 @@
+<div class="v2-dashboard-wrapper">
+  <div class="v2-header-clean">
+    <div class="v2-header-title">
+      <span class="v2-logo-flash">📜</span>
+      <h1 class="v2-main-title">
+        REGISTRO HISTÓRICO DE <span class="cyan-neon-text">FACTURAS V2</span>
+      </h1>
+    </div>
+    <p class="v2-header-subtitle">
+      Bitácora lineal de auditoría y auditoría interna de documentos cargados al pool.
+    </p>
+  </div>
+
+  <!-- Tabla de Auditoría Plana Adaptable -->
+  <div class="v2-matrix-container">
+    <div class="v2-historico-header-grid">
+      <div>Fecha Registro</div>
+      <div>No. Documento</div>
+      <div>Entidad / Razón Social</div>
+      <div class="text-end">Monto Original</div>
+      <div class="text-center">Estado</div>
+      <div>Gestor</div>
+    </div>
+
+    <div class="v2-matrix-body-vertical">
+      @for (item of logFacturas; track item.no_documento) {
+        <div class="v2-historico-row-grid">
+          <div class="text-muted font-mono">{{ item.fecha_registro }}</div>
+          <div class="fw-bold text-white">{{ item.no_documento }}</div>
+          <div class="text-truncate">{{ item.entidad }}</div>
+          <div
+            class="text-end fw-bold font-mono"
+            [style.color]="item.moneda === 'USD' ? '#00f2fe' : '#10b981'"
+          >
+            {{ item.moneda === 'GTQ' ? 'Q ' : '$ ' }}{{ item.monto | number: '1.2-2' }}
+          </div>
+          <div class="text-center">
+            <span
+              class="badge-status-flat"
+              [class.st-corriente]="item.estado === 'CORRIENTE'"
+              [class.st-vencido]="item.estado === 'VENCIDO'"
+              [class.st-critico]="item.estado === 'CRÍTICO'"
+            >
+              {{ item.estado }}
+            </span>
+          </div>
+          <div class="text-muted small">{{ item.gestor }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

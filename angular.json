@@ -29,7 +29,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "public/_redirects"
             ],
             "styles": ["src/styles.scss"]
           },

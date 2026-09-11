@@ -1,5 +1,5 @@
 <div class="v2-dashboard-wrapper">
-  <!-- 🛰️ ENCABEZADO EJECUTIVO LIMPIO (REMOVIDO EL BADGE SECUNDARIO) -->
+  <!-- 🛰️ ENCABEZADO EJECUTIVO LIMPIO -->
   <div class="v2-header-clean">
     <div class="v2-header-title">
       <span class="v2-logo-flash">⚡</span>
@@ -22,30 +22,42 @@
 
   <!-- 📊 CONTENIDO DINÁMICO SEGÚN LA SELECCIÓN DEL SIDEBAR -->
   @if (esModoResumen) {
-    <!-- 🟢 SECCIÓN 1: LOS TABLEROS DE CONTROL COMPACTOS HORIZONTALES -->
+    <!-- 🟢 SECCIÓN DE ACCIONES EXCLUSIVAS DEL CONSOLIDADO -->
+    <div class="d-flex justify-content-end gap-2 mb-3">
+      <app-excel-button [kpis]="kpis"></app-excel-button>
+      <button
+        type="button"
+        (click)="forzarRefrescoCarteraV2()"
+        class="btn-v2-cuadrado border-refresh-glow"
+        style="
+          height: 44px !important;
+          width: 120px !important;
+          background-color: var(--bg-card);
+          color: var(--text-main);
+          border: 1px solid var(--border-line);
+        "
+      >
+        🔄 Refrescar Pool
+      </button>
+    </div>
+
+    <!-- Tableros de Control KPIs Horizontales Consolidados -->
     <div class="v2-kpi-row-horizontal">
-      <!-- Card Quetzales -->
       <div class="v2-kpi-card-box gtq-glow">
         <div class="v2-card-meta">🇬🇹 DIVISIÓN QUETZALES (GTQ)</div>
         <div class="v2-card-amount">Q 57,500.00</div>
         <div class="v2-card-footer text-success">🟢 Recaudado: Q 12,400.00 (21.5%)</div>
       </div>
-
-      <!-- Card Dólares -->
       <div class="v2-kpi-card-box usd-glow">
         <div class="v2-card-meta">🇺🇸 DIVISIÓN DÓLARES (USD)</div>
         <div class="v2-card-amount cyan-neon-text">$ 3,550.00</div>
         <div class="v2-card-footer text-success">🟢 Recaudado: $ 1,150.00 (32.4%)</div>
       </div>
-
-      <!-- Card Eficiencia Corporativa -->
       <div class="v2-kpi-card-box blue-glow">
         <div class="v2-card-meta">📈 EFICIENCIA DE COBRO</div>
         <div class="v2-card-amount text-primary">17.7%</div>
         <div class="v2-card-footer text-muted">Promedio mensual corporativo</div>
       </div>
-
-      <!-- Card Riesgo Crítico -->
       <div class="v2-kpi-card-box red-glow">
         <div class="v2-card-meta">🚨 RIESGO CRÍTICO (+90D)</div>
         <div class="v2-card-amount text-danger">$ 2,400.00</div>
@@ -53,7 +65,7 @@
       </div>
     </div>
 
-    <!-- 🟢 SECCIÓN 2: GRÁFICA DE RENDIMIENTO DE CARTERA HORIZONTAL -->
+    <!-- Gráfica de Rendimiento de Cartera Horizontal -->
     <div class="v2-graph-section-horizontal">
       <div class="v2-graph-header">
         <span class="graph-icon">📊</span>
@@ -65,9 +77,7 @@
           </p>
         </div>
       </div>
-
       <div class="v2-bars-container-horizontal">
-        <!-- Barra 1: División Quetzales -->
         <div class="v2-bar-item-row">
           <div class="v2-bar-labels">
             <span class="fw-bold">🇬🇹 División Quetzales (GTQ)</span>
@@ -77,12 +87,9 @@
             <div class="v2-bar-fill-gradient bg-gtq-gradient" style="width: 21.5%"></div>
           </div>
           <div class="v2-bar-footers">
-            <span>Meta: Q 57,500.00</span>
-            <span>Logrado: Q 12,400.00</span>
+            <span>Meta: Q 57,500.00</span><span>Logrado: Q 12,400.00</span>
           </div>
         </div>
-
-        <!-- Barra 2: División Dólares -->
         <div class="v2-bar-item-row">
           <div class="v2-bar-labels">
             <span class="fw-bold">🇺🇸 División Dólares (USD)</span>
@@ -92,13 +99,10 @@
             <div class="v2-bar-fill-gradient bg-usd-gradient" style="width: 32.4%"></div>
           </div>
           <div class="v2-bar-footers">
-            <span>Meta: $ 3,550.00</span>
-            <span>Logrado: $ 1,150.00</span>
+            <span>Meta: $ 3,550.00</span><span>Logrado: $ 1,150.00</span>
           </div>
         </div>
       </div>
-
-      <!-- Mensaje Ejecutivo Final -->
       <div class="v2-executive-footer">
         <span class="v2-executive-badge"
           >🚀 EFICIENCIA CORPORATIVA GENERAL SUBIÓ +4.3% RESPECTO AL MES ANTERIOR</span
@@ -106,14 +110,9 @@
       </div>
     </div>
   } @else {
-    <!-- 🧮 VISTA DE OPERACIONES TRADICIONAL FILTRADA (QUETZALES O DÓLARES) -->
-
-    <!-- MÓDULO HORIZONTAL UNIFICADO DE CONTROLES SUPERIORES -->
-    <div
-      class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3 mb-4"
-    >
-      <!-- Caja de Búsqueda Compacta Sincronizada con Señales -->
-      <div class="v2-search-box-compact m-0">
+    <!-- 🧮 VISTA DE OPERACIONES: CONTROLES EN UNA SOLA LÍNEA HORIZONTAL -->
+    <div class="v2-top-control-bar-horizontal">
+      <div class="v2-search-box-compact-embedded">
         <span class="search-lens">🔍</span>
         <input
           type="text"
@@ -123,18 +122,21 @@
         />
       </div>
 
-      <!-- BOTONES ATÓMICOS CONECTADOS POR CANALES DE SALIDA -->
-      <div class="d-flex gap-2">
-        <!-- 🟢 Inyección del nuevo componente de refresco por separado -->
-        <app-refresh-button (alRefrescar)="forzarRefrescoCarteraV2()"></app-refresh-button>
-        <app-action-bar></app-action-bar>
+      <div class="v2-actions-wrapper-embedded">
+        <app-action-bar
+          (alRefrescar)="forzarRefrescoCarteraV2()"
+          (alDescargarExcel)="descargarExcelDesdePadreV2()"
+          (alAgregarFactura)="inyectarNuevaFacturaEnMemoriaV2($event)"
+        ></app-action-bar>
       </div>
     </div>
 
-    <!-- Módulo de métricas e indicadores de tarjetas -->
+    <!-- Módulo de métricas e indicadores de tarjetas operativos -->
     <app-kpi-cards [tablero]="monedaVista" [kpis]="kpis"></app-kpi-cards>
 
-    <!-- Rejilla Jerárquica Pivot Modular Separada -->
-    <app-matriz-cartera [datos]="carteraFiltradaV2" [moneda]="monedaVista"></app-matriz-cartera>
+    <!-- 🟢 REJILLA TOTALMENTE FIJA E INDEPENDIENTE EN LA BASE DE LA PÁGINA -->
+    <div class="v2-matrix-fija-wrapper-layout">
+      <app-matriz-cartera [datos]="carteraFiltradaV2" [moneda]="monedaVista"></app-matriz-cartera>
+    </div>
   }
 </div>

@@ -1,0 +1,13 @@
+.v2-action-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-line) !important;
+  border-left: 3px solid #3b82f6 !important;
+}
+.action-title {
+  color: #3b82f6 !important;
+}
+body.light-theme {
+  .action-title {
+    color: #1d4ed8 !important; /* Azul SAP profundo */
+  }
+}

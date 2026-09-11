@@ -1,0 +1,39 @@
+/* ==========================================================================
+   🔄 COMPONENTE ATÓMICO: BOTÓN REFRESCAR FINANCIERO (V2)
+   ========================================================================== */
+:host {
+  display: block;
+  flex: 1;
+  min-width: 140px;
+}
+
+.v2-action-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-line) !important;
+  border-left: 3px solid #00f2fe !important; // Borde cian neón base
+}
+
+/* Letras por defecto en Modo Oscuro */
+.action-title {
+  color: #ffffff !important;
+}
+
+.action-desc {
+  color: #9ca3af !important;
+}
+
+/* 🟢 DETECTOR DE CONTEXTO: Cambia los textos a negro SAP cuando el body tiene la clase clara */
+:host-context(body.light-theme) {
+  .v2-action-card {
+    border-left: 3px solid #0f172a !important; /* Borde negro ejecutivo */
+  }
+  .action-title {
+    color: #0f172a !important; /* Negro grafito profundo */
+  }
+  .action-desc {
+    color: #475569 !important; /* Subtexto gris pizarra oscuro */
+  }
+  .text-cyan-neon {
+    color: #0f172a !important; /* El icono 🔄 muta a negro */
+  }
+}

@@ -1,0 +1,13 @@
+.v2-action-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-line) !important;
+  border-left: 3px solid #059669 !important;
+}
+.action-title {
+  color: #059669 !important;
+}
+body.light-theme {
+  .action-title {
+    color: #047857 !important;
+  }
+}

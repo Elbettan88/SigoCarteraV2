@@ -1,37 +1,181 @@
 <div class="v2-action-cards-row">
-  <!-- Micro-Card 1: Modificar -->
-  <button type="button" class="v2-action-card border-outline-glow">
-    <span class="action-icon">🔧</span>
-    <div class="action-text-wrapper">
-      <span class="action-title">Modificar</span>
-      <span class="action-desc">Ficha Entidad</span>
-    </div>
-  </button>
+  <!-- 🟢 Bloque de Micro-Cards Atómicas Separadas -->
+  <app-btn-refrescar (click)="dispararRefresco()"></app-btn-refrescar>
+  <app-btn-modificar (click)="abrirFormulario('modificar')"></app-btn-modificar>
+  <app-btn-abonar (click)="abrirFormulario('abonar')"></app-btn-abonar>
+  <app-btn-registrar (click)="abrirFormulario('registrar')"></app-btn-registrar>
+  <app-btn-excel (click)="dispararExcel()"></app-btn-excel>
+</div>
 
-  <!-- Micro-Card 2: Abonar -->
-  <button type="button" class="v2-action-card border-success-glow">
-    <span class="action-icon text-success">💵</span>
-    <div class="action-text-wrapper">
-      <span class="action-title text-success">Abonar</span>
-      <span class="action-desc">Ingresar Pago</span>
+<!-- 🪐 CORTINA LATERAL FLOTANTE PREMIUM (DRAWER ESTILO SAP HORIZON) -->
+<div
+  class="v2-drawer-overlay"
+  [class.drawer-abierto]="panelActivo() !== null"
+  (click)="cerrarFormulario()"
+>
+  <div
+    class="v2-drawer-content"
+    [class.drawer-abierto]="panelActivo() !== null"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Encabezado del Drawer -->
+    <div class="v2-drawer-header">
+      <h4 class="text-white fw-black m-0">
+        {{
+          panelActivo() === 'registrar'
+            ? '📝 REGISTRAR NUEVA FACTURA V2'
+            : panelActivo() === 'abonar'
+              ? '💵 INGRESAR ABONO A CARTERA'
+              : '🔧 MODIFICAR ENTIDAD'
+        }}
+      </h4>
+      <button type="button" class="btn-cerrar-drawer" (click)="cerrarFormulario()">✕</button>
     </div>
-  </button>
 
-  <!-- Micro-Card 3: Registrar -->
-  <button type="button" class="v2-action-card border-primary-glow">
-    <span class="action-icon text-primary">➕</span>
-    <div class="action-text-wrapper">
-      <span class="action-title text-primary">Registrar</span>
-      <span class="action-desc">Nueva Factura</span>
-    </div>
-  </button>
+    <!-- Cuerpo del Formulario Adaptable -->
+    <div class="v2-drawer-body">
+      <!-- 🟢 CASO 1: FORMULARIO DE REGISTRO COMPLETO -->
+      @if (panelActivo() === 'registrar') {
+        <form class="v2-financial-form">
+          <!-- 🎛️ SECCIÓN DE ALTERNANCIA DE REGISTRO PADRE / HIJO -->
+          <div class="input-field-v2">
+            <label>Tipo de Registro (Base de Datos)</label>
+            <div class="v2-push-toggle-container" (click)="alternarTipoEntidad()">
+              <!-- El carril aplica la clase push-track-hijo si la señal es igual a 'hijo' -->
+              <div
+                class="v2-push-circle-track"
+                [class.push-track-hijo]="formFactura.tipoEntidad === 'hijo'"
+              >
+                <div class="v2-push-circle-handle"></div>
+              </div>
 
-  <!-- Micro-Card 4: Excel -->
-  <button type="button" class="v2-action-card border-excel-glow">
-    <span class="action-icon text-emerald">📥</span>
-    <div class="action-text-wrapper">
-      <span class="action-title text-emerald">Excel</span>
-      <span class="action-desc">Exportar Pool</span>
+              <span class="v2-push-toggle-label">
+                Entidad:
+                <strong
+                  [style.color]="formFactura.tipoEntidad === 'padre' ? '#10b981' : '#3b82f6'"
+                  >{{ formFactura.tipoEntidad.toUpperCase() }}</strong
+                >
+              </span>
+            </div>
+          </div>
+
+          <div class="row-inputs-v2">
+            <div class="input-field-v2">
+              <label>Serie de Factura</label>
+              <input
+                type="text"
+                placeholder="Ej: FEL"
+                [(ngModel)]="formFactura.serie"
+                name="serie"
+              />
+            </div>
+            <div class="input-field-v2">
+              <label>Numero de Factura</label>
+              <input
+                type="text"
+                placeholder="Ej: 4504"
+                [(ngModel)]="formFactura.numero"
+                name="numero"
+              />
+            </div>
+          </div>
+
+          <div class="row-inputs-v2">
+            <div class="input-field-v2">
+              <label>Moneda Documento</label>
+              <select [(ngModel)]="formFactura.moneda" name="moneda" (change)="evaluarTipoCambio()">
+                <option value="GTQ">🇬🇹 Quetzales (GTQ)</option>
+                <option value="USD">🇺🇸 Dólares (USD)</option>
+              </select>
+            </div>
+            <div class="input-field-v2">
+              <label>Monto de Factura</label>
+              <input
+                type="number"
+                placeholder="0.00"
+                [(ngModel)]="formFactura.monto"
+                name="monto"
+              />
+            </div>
+          </div>
+
+          <!-- Campo Inteligente de Tipo de Cambio en Dólares -->
+          @if (formFactura.moneda === 'USD') {
+            <div class="input-field-v2 usd-exchange-glow">
+              <label class="text-cyan-neon">⚡ Tipo de Cambio Utilizado</label>
+              <input
+                type="number"
+                step="0.01"
+                [(ngModel)]="formFactura.tipoCambio"
+                name="tipoCambio"
+              />
+            </div>
+          }
+
+          <div class="row-inputs-v2">
+            <div class="input-field-v2">
+              <label>{{
+                formFactura.tipoEntidad === 'padre' ? 'NIT Cliente Padre' : 'Codigo Marca (Hijo)'
+              }}</label>
+              <input
+                type="text"
+                [placeholder]="
+                  formFactura.tipoEntidad === 'padre' ? 'Ej: 814526-7' : 'Ej: MARC-001'
+                "
+                [(ngModel)]="formFactura.codigoCliente"
+                name="codigoCliente"
+              />
+            </div>
+            <div class="input-field-v2">
+              <label>Condicion de Pago</label>
+              <select [(ngModel)]="formFactura.condicionPago" name="condicionPago">
+                <option value="credito">⏳ Crédito Comercial</option>
+                <option value="contado">💵 Pago de Contado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-field-v2">
+            <label>Nombre / Razon Social del Cliente</label>
+            <input
+              type="text"
+              placeholder="Ej: Importadora Eléctrica, S.A."
+              [(ngModel)]="formFactura.nombreCliente"
+              name="nombreCliente"
+            />
+          </div>
+
+          <div class="input-field-v2">
+            <label>Fecha de Emision</label>
+            <input type="date" [(ngModel)]="formFactura.fecha" name="fecha" />
+          </div>
+
+          <div class="v2-form-actions-footer">
+            <button type="button" class="btn-form-v2 btn-cancel" (click)="cerrarFormulario()">
+              Cancelar
+            </button>
+            <button type="button" class="btn-form-v2 btn-save" (click)="guardarFacturaV2()">
+              Guardar Documento
+            </button>
+          </div>
+        </form>
+      }
+
+      <!-- 🟢 CASO 2: FORMULARIO DE ABONO COPLADO DE FORMA SEGURA POR SEPARADO -->
+      @if (panelActivo() === 'abonar') {
+        <app-form-abonar
+          (alGuardarAbono)="puenteGuardarAbono($event)"
+          (alCancelarAbono)="cerrarFormulario()"
+        ></app-form-abonar>
+      }
+
+      <!-- 🟢 CASO 3: FORMULARIO DE MODIFICACIÓN ACOPLADO POR SEPARADO -->
+      @if (panelActivo() === 'modificar') {
+        <app-form-modificar
+          (alGuardarModificacion)="puenteGuardarModificacion($event)"
+          (alCancelarModificacion)="cerrarFormulario()"
+        ></app-form-modificar>
+      }
     </div>
-  </button>
+  </div>
 </div>
