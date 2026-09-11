@@ -1,0 +1,13 @@
+<div class="v2-theme-toggle-wrapper" (click)="alternarTemaV2()">
+  <!-- El switch deslizable estilo iOS pero con look oscuro/claro -->
+  <div class="v2-toggle-track" [class.track-light]="!esModoOscuro()">
+    <div class="v2-toggle-handle" [class.handle-light]="!esModoOscuro()">
+      <span>{{ esModoOscuro() ? '🌙' : '☀️' }}</span>
+    </div>
+  </div>
+  @if (mostrarTexto) {
+    <span class="v2-toggle-label animate-fade-in">
+      {{ esModoOscuro() ? 'Modo Oscuro' : 'Modo Claro' }}
+    </span>
+  }
+</div>

@@ -1,0 +1,118 @@
+<div
+  class="d-flex min-h-screen bg-[#0d0f12] text-[#f3f4f6]"
+  style="min-height: 100vh; width: 100vw"
+>
+  <!-- 🧭 SIDEBAR CORPORATIVO CON INTEGRACIÓN INTERNA DEL BOTÓN -->
+  <aside [class.sidebar-colapsado]="menuColapsado()" class="sidebar-v2">
+    <div class="sidebar-top">
+      <!-- Encabezado de Marca + Botón Hamburguesa Integrado -->
+      <div class="brand-section" [class.justify-content-center]="menuColapsado()">
+        <button
+          type="button"
+          (click)="menuColapsado.set(!menuColapsado())"
+          class="btn-hamburguesa-v2"
+        >
+          <span>☰</span>
+        </button>
+
+        @if (!menuColapsado()) {
+          <div class="brand-text-wrapper animate-fade-in">
+            <span class="brand-icon">⚡</span>
+            <h3>SIGOCARTERA <span class="cyan-badge">V2</span></h3>
+          </div>
+        }
+      </div>
+
+      <!-- Ficha de Sesión del Usuario -->
+      <div class="user-session-card" [class.justify-content-center]="menuColapsado()">
+        <div class="avatar-circle">
+          {{ autService.obtenerNombreUsuario().substring(0, 2).toUpperCase() }}
+        </div>
+        @if (!menuColapsado()) {
+          <div class="user-info animate-fade-in">
+            <h4 class="user-name">{{ autService.obtenerNombreUsuario() }}</h4>
+            <span class="role-badge">🛡️ {{ autService.obtenerRolUsuario() }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- 🌐 MENÚ DE VISTAS AUTÓNOMAS SEGMENTADO POR DIVISIONES DE MONEDA -->
+      <nav class="sidebar-nav">
+        <!-- Opción 1: Resumen General Consolidado -->
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active-route"
+          class="menu-link"
+          [class.justify-content-center]="menuColapsado()"
+        >
+          <span class="link-icon">📊</span>
+          @if (!menuColapsado()) {
+            <span class="animate-fade-in">Consolidado General</span>
+          }
+        </a>
+
+        <!-- Opción 2: Flujo Exclusivo en Quetzales -->
+        <a
+          [routerLink]="['/cartera', 'GTQ']"
+          routerLinkActive="active-route"
+          class="menu-link"
+          [class.justify-content-center]="menuColapsado()"
+        >
+          <span class="link-icon">🇬🇹</span>
+          @if (!menuColapsado()) {
+            <span class="animate-fade-in">Cartera Quetzales</span>
+          }
+        </a>
+
+        <!-- Opción 3: Flujo Exclusivo en Dólares -->
+        <a
+          [routerLink]="['/cartera', 'USD']"
+          routerLinkActive="active-route"
+          class="menu-link"
+          [class.justify-content-center]="menuColapsado()"
+        >
+          <span class="link-icon">🇺🇸</span>
+          @if (!menuColapsado()) {
+            <span class="animate-fade-in">Cartera Dólares</span>
+          }
+        </a>
+
+        <!-- Opción 4: Gestión del Personal -->
+        <a
+          routerLink="/usuarios"
+          routerLinkActive="active-route"
+          class="menu-link"
+          [class.justify-content-center]="menuColapsado()"
+        >
+          <span class="link-icon">👥</span>
+          @if (!menuColapsado()) {
+            <span class="animate-fade-in">Usuarios y Roles</span>
+          }
+        </a>
+      </nav>
+    </div>
+
+    <!-- Cierre de Sesión Seguro + Selector de Tema Atómico Integrado -->
+    <div class="sidebar-bottom">
+      <!-- ☀️ Switch On/Off de Modo Claro / Modo Oscuro Independiente -->
+      <app-theme-toggle [mostrarTexto]="!menuColapsado()"></app-theme-toggle>
+
+      <button
+        type="button"
+        (click)="logoutV2()"
+        class="btn-logout-v2"
+        [class.justify-content-center]="menuColapsado()"
+      >
+        <span>🚪</span>
+        @if (!menuColapsado()) {
+          <span class="animate-fade-in">Cerrar Plataforma</span>
+        }
+      </button>
+    </div>
+  </aside>
+
+  <!-- 🖥️ LIENZO DE CONTENIDO DINÁMICO FLUIDO -->
+  <main class="main-content-v2">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,144 @@
+<div class="v2-matrix-container">
+  <!-- 📊 ENCABEZADOS DE COLUMNA ALINEADOS MILIMÉTRICAMENTE -->
+  <div class="v2-matrix-header-grid">
+    <div class="cell-head text-start ps-3">
+      Mapeo Jerárquico Organizacional (NIT ➔ Marca ➔ Factura)
+    </div>
+    <div class="cell-head text-end">Total Cartera</div>
+    <div class="cell-head text-end">0 - 30 días</div>
+    <div class="cell-head text-end">31 - 60 días</div>
+    <div class="cell-head text-end">61 - 90 días</div>
+    <div class="cell-head text-end red-neon-text">Crítico (+90 días)</div>
+  </div>
+
+  <!-- 🟢 CUERPO DINÁMICO DE DATOS (FILTRADO ATÓMICO POR DIVISA ACTIVE) -->
+  <div class="v2-matrix-body-vertical">
+    @for (cliente of datos; track cliente.nit) {
+      <!-- EVALUACIÓN PREVIA: Solo dibuja al Cliente si tiene saldos en la moneda activa -->
+      @if (obtenerTotalPorMoneda(cliente, 'total', moneda) > 0) {
+        <!-- 1️⃣ ROW PADRE: CLIENTE (NIT) -->
+        <div class="v2-row-grid row-padre-cliente">
+          <div class="cell-data text-start d-flex align-items-center gap-2">
+            <button
+              type="button"
+              class="v2-btn-arrow"
+              (click)="cliente.expandido = !cliente.expandido"
+            >
+              {{ cliente.expandido ? '▼' : '▶' }}
+            </button>
+            <span class="badge-padre">PADRE</span>
+            <strong class="text-white">[{{ cliente.nit }}]</strong>
+            <span class="text-muted text-truncate">— {{ cliente.razon_social }}</span>
+          </div>
+          <div class="cell-data text-end fw-black text-cyan-neon font-mono">
+            {{ moneda === 'GTQ' ? 'Q ' : '$ '
+            }}{{ obtenerTotalPorMoneda(cliente, 'total', moneda) | number: '1.2-2' }}
+          </div>
+          <div class="cell-data text-end font-mono text-muted">
+            {{ obtenerTotalPorMoneda(cliente, 'r1', moneda) | number: '1.2-2' }}
+          </div>
+          <div class="cell-data text-end font-mono text-muted">
+            {{ obtenerTotalPorMoneda(cliente, 'r2', moneda) | number: '1.2-2' }}
+          </div>
+          <div class="cell-data text-end font-mono text-muted">
+            {{ obtenerTotalPorMoneda(cliente, 'r3', moneda) | number: '1.2-2' }}
+          </div>
+          <div class="cell-data text-end font-mono text-danger fw-bold">
+            {{ obtenerTotalPorMoneda(cliente, 'critico', moneda) | number: '1.2-2' }}
+          </div>
+        </div>
+
+        <!-- 2️⃣ ROW HIJO: MARCAS FILTRADAS EN LÍNEA -->
+        @if (cliente.expandido && cliente.marcas) {
+          @for (marca of cliente.marcas; track marca.codigo_hijo) {
+            <!-- Solo dibuja la Marca si tiene documentos en la divisa del Sidebar -->
+            @if (obtenerTotalMarcaPorMoneda(marca, 'total', moneda) > 0) {
+              <div class="v2-row-grid row-hijo-marca">
+                <div class="cell-data text-start d-flex align-items-center gap-2 ps-4">
+                  <button
+                    type="button"
+                    class="v2-btn-arrow text-muted"
+                    (click)="marca.expandido = !marca.expandido"
+                  >
+                    {{ marca.expandido ? '▼' : '▶' }}
+                  </button>
+                  <span class="text-muted small">↳</span>
+                  <span class="badge-hijo">{{ marca.codigo_hijo }}</span>
+                  <span class="text-white/80 text-truncate">{{ marca.nombre_marca }}</span>
+                </div>
+                <div class="cell-data text-end fw-bold text-white font-mono">
+                  {{ moneda === 'GTQ' ? 'Q ' : '$ '
+                  }}{{ obtenerTotalMarcaPorMoneda(marca, 'total', moneda) | number: '1.2-2' }}
+                </div>
+                <div class="cell-data text-end font-mono text-muted">
+                  {{ obtenerTotalMarcaPorMoneda(marca, 'r1', moneda) | number: '1.2-2' }}
+                </div>
+                <div class="cell-data text-end font-mono text-muted">
+                  {{ obtenerTotalMarcaPorMoneda(marca, 'r2', moneda) | number: '1.2-2' }}
+                </div>
+                <div class="cell-data text-end font-mono text-muted">
+                  {{ obtenerTotalMarcaPorMoneda(marca, 'r3', moneda) | number: '1.2-2' }}
+                </div>
+                <div class="cell-data text-end font-mono text-danger/80">
+                  {{ obtenerTotalMarcaPorMoneda(marca, 'critico', moneda) | number: '1.2-2' }}
+                </div>
+              </div>
+
+              <!-- 3️⃣ ROW FINAL: DETALLE EXCLUSIVO DE FACTURAS -->
+              @if (marca.expandido && marca.facturas) {
+                @for (f of marca.facturas; track f.no_factura) {
+                  <!-- Discriminador estricto de divisa en tiempo de renderizado -->
+                  @if (f.moneda === moneda) {
+                    <div
+                      (click)="seleccionarFilaInterna(cliente, marca, f)"
+                      class="v2-row-grid row-factura-detalle"
+                      [class.row-factura-activa]="facturaSeleccionada === f"
+                    >
+                      <div class="cell-data text-start d-flex align-items-center gap-2 ps-5">
+                        <span class="text-muted/40 ps-2">↳</span>
+                        <span
+                          class="v2-semaphore-dot"
+                          [class.bg-success-neon]="f.dias_vencidos <= 30"
+                          [class.bg-warning-neon]="f.dias_vencidos > 30 && f.dias_vencidos <= 90"
+                          [class.bg-danger-neon]="f.dias_vencidos > 90"
+                        ></span>
+                        <span class="font-monospace text-white/90 fw-bold">{{ f.no_factura }}</span>
+                        <span class="text-muted small"
+                          >永久 ({{ f.dias_vencidos }} días atraso)</span
+                        >
+                      </div>
+
+                      <div class="cell-data text-end text-white/70 font-mono fw-semibold">
+                        {{ moneda === 'GTQ' ? 'Q ' : '$ ' }}{{ f.saldo | number: '1.2-2' }}
+                      </div>
+                      <div class="cell-data text-end font-mono text-muted/60">
+                        {{ f.dias_vencidos <= 30 ? (f.saldo | number: '1.2-2') : '0.00' }}
+                      </div>
+                      <div class="cell-data text-end font-mono text-muted/60">
+                        {{
+                          f.dias_vencidos > 30 && f.dias_vencidos <= 60
+                            ? (f.saldo | number: '1.2-2')
+                            : '0.00'
+                        }}
+                      </div>
+                      <div class="cell-data text-end font-mono text-muted/60">
+                        {{
+                          f.dias_vencidos > 60 && f.dias_vencidos <= 90
+                            ? (f.saldo | number: '1.2-2')
+                            : '0.00'
+                        }}
+                      </div>
+                      <div class="cell-data text-end font-mono text-danger/60">
+                        {{ f.dias_vencidos > 90 ? (f.saldo | number: '1.2-2') : '0.00' }}
+                      </div>
+                    </div>
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  </div>
+</div>

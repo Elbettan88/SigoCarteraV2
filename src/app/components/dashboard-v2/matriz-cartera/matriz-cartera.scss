@@ -1,0 +1,135 @@
+/* ==========================================================================
+   🧮 MOTOR DE TABLA DINÁMICA DE ALTA FIDELIDAD V2 (BAJO REJILLA CSS GRID)
+   ========================================================================== */
+.v2-matrix-container {
+  width: 100%;
+  background-color: #141820;
+  border: 1px solid #1e232a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Fila de encabezado base */
+.v2-matrix-header-grid {
+  display: grid;
+  grid-template-columns: 31% 15% 13.5% 13.5% 13.5% 13.5%;
+  background-color: #0d0f12;
+  border-bottom: 1px solid #1e232a;
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  .cell-head {
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.v2-matrix-body-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estructura base de las filas de datos */
+.v2-row-grid {
+  display: grid;
+  grid-template-columns: 31% 15% 13.5% 13.5% 13.5% 13.5%;
+  align-items: center;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  transition: all 0.15s ease-in-out;
+
+  .cell-data {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Variaciones estéticas según la jerarquía */
+.row-padre-cliente {
+  background-color: rgba(24, 31, 42, 0.4);
+  border-bottom: 1px solid #1e232a;
+}
+.row-hijo-marca {
+  background-color: rgba(17, 21, 29, 0.6);
+  border-bottom: 1px solid rgba(30, 35, 42, 0.4);
+}
+.row-factura-detalle {
+  background-color: #141820;
+  border-bottom: 1px solid rgba(30, 35, 42, 0.2);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+}
+.row-factura-activa {
+  background-color: rgba(0, 242, 254, 0.05) !important;
+  border-left: 3px solid #00f2fe !important;
+}
+
+/* Badges e Identificadores Contables */
+.badge-padre {
+  background-color: #1e232a;
+  color: #9ca3af;
+  font-family: monospace;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #2d3540;
+}
+.badge-hijo {
+  background-color: #0d0f12;
+  color: #00f2fe;
+  font-family: monospace;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+/* Botones Flecha */
+.v2-btn-arrow {
+  background: transparent;
+  border: none;
+  color: #00f2fe;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 2px 6px;
+  outline: none;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+/* Semáforos circulares con iluminación neón */
+.v2-semaphore-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px currentColor;
+}
+.bg-success-neon {
+  color: #10b981;
+  background-color: #10b981;
+}
+.bg-warning-neon {
+  color: #f59e0b;
+  background-color: #f59e0b;
+}
+.bg-danger-neon {
+  color: #f43f5e;
+  background-color: #f43f5e;
+}
+
+.text-cyan-neon {
+  color: #00f2fe !important;
+}

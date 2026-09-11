@@ -1,17 +1,31 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# ==========================================================================
+# 🪐 SIGOCARTERA V2 — ARCHIVO DE EXCLUSIÓN GIT (ANGULAR 18 PROFESSIONAL)
+# ==========================================================================
 
-# Compiled output
+# Carpetas de Compilación y Output
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node
+# Dependencias Locales y Logs de Paquetes
 /node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
+# Entornos y Llaves Secretas del Backend
+.env
+.env.*
+
+# Visual Studio Code e IDEs de Desarrollo
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
 .idea/
 .project
 .classpath
@@ -20,17 +34,10 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/mcp.json
-.history/*
-
-# Miscellaneous
+# Caché del Framework y Reportes Temporales
+/.angular/
 /.angular/cache
+.angular/
 .sass-cache/
 /connect.lock
 /coverage
@@ -39,6 +46,6 @@ testem.log
 /typings
 __screenshots__/
 
-# System files
+# Archivos Basura del Sistema Operativo
 .DS_Store
 Thumbs.db

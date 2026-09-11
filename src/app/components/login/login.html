@@ -1,0 +1,64 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <!-- Destello de fondo cyberpunk -->
+    <div class="cyber-glow"></div>
+
+    <!-- Encabezado e Identidad -->
+    <div class="login-header">
+      <div class="logo-circle">
+        <span>⚡</span>
+      </div>
+      <h2>SIGOCARTERA <span class="cyan-text">V2</span></h2>
+      <p class="subtitle">Gestión y Auditoría de Saldos Multimoneda</p>
+    </div>
+
+    @if (errorMensaje()) {
+      <div class="error-box">⚠️ {{ errorMensaje() }}</div>
+    }
+
+    <!-- Formulario Seguro -->
+    <form (submit)="ejecutarLoginV2($event)" class="login-form">
+      <div class="input-group-v2">
+        <label>📧 Correo Institucional</label>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="correo"
+          placeholder="ejemplo@sigo.com"
+          required
+        />
+      </div>
+
+      <div class="input-group-v2">
+        <label>🔑 Contraseña de Acceso</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="clave"
+          placeholder="••••••••••••"
+          required
+        />
+      </div>
+
+      <div class="form-actions">
+        <label class="checkbox-container"> <input type="checkbox" /> Recordar sesión </label>
+        <span class="forgot-link">¿Olvidó su contraseña?</span>
+      </div>
+
+      <button type="submit" [disabled]="cargando()" class="btn-submit-v2">
+        @if (cargando()) {
+          <span class="spinner-v2"></span>
+        } @else {
+          Autenticar Sistema
+        }
+      </button>
+
+      <!-- Tip de Credenciales de Auditoría -->
+      <div class="credentials-tip">
+        <span class="tip-title">ROLES COMPATIBLES PARA PRUEBAS:</span><br />
+        Admin: admin@sigo.com | Sigo2026!<br />
+        Gestor: gestor@sigo.com | Cobros2026!
+      </div>
+    </form>
+  </div>
+</div>

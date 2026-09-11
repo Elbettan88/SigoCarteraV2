@@ -1,0 +1,33 @@
+<div class="v2-kpi-row-horizontal">
+  <div class="v2-kpi-card-box gtq-glow">
+    <div class="v2-card-meta">💰 SALDO VIVO ACTIVO</div>
+    <div class="v2-card-amount">
+      {{ tablero === 'GTQ' ? 'Q' : '$' }} {{ kpis.saldoVivo | number: '1.2-2' }}
+    </div>
+    <div class="v2-card-footer text-muted">Monto total en circulación</div>
+  </div>
+
+  <div class="v2-kpi-card-box usd-glow">
+    <div class="v2-card-meta">✅ COBROS RECAUDADOS</div>
+    <div class="v2-card-amount" style="color: #10b981 !important">
+      {{ tablero === 'GTQ' ? 'Q' : '$' }} {{ kpis.pagosRecibidos | number: '1.2-2' }}
+    </div>
+    <div class="v2-card-footer text-success">Recuperación del mes actual</div>
+  </div>
+
+  <div class="v2-kpi-card-box blue-glow">
+    <div class="v2-card-meta">📊 EFICIENCIA DE COBRO</div>
+    <div class="v2-card-amount" style="color: #3b82f6 !important">
+      {{ kpis.porcentajeRecuperacion | number: '1.1-1' }}%
+    </div>
+    <div class="v2-card-footer text-muted">Rendimiento administrativo</div>
+  </div>
+
+  <div class="v2-kpi-card-box red-glow">
+    <div class="v2-card-meta">🚨 RIESGO CRÍTICO (+120D)</div>
+    <div class="v2-card-amount text-danger">
+      {{ tablero === 'GTQ' ? 'Q' : '$' }} {{ kpis.saldoCritico | number: '1.2-2' }}
+    </div>
+    <div class="v2-card-footer text-danger/80">Requiere auditoría inmediata</div>
+  </div>
+</div>
